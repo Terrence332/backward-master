@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backward.account.dao.RoleAuthDao">
+    <resultMap id="BaseResultMap" type="com.backward.account.dmo.RoleAuthDmo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="role" jdbcType="VARCHAR" property="role" />
+        <result column="authority" jdbcType="VARCHAR" property="authority" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, role, authority
+    </sql>
+
+    <select id="selectAllRecord" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from oauth_role_auth
+    </select>
+
+    <select id="selectAuthByRole" parameterType="java.lang.String" resultType="java.lang.String">
+        select authority
+        from oauth_role_auth
+        where role = #{role,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectAuthByUsername" parameterType="java.lang.String" resultType="java.lang.String">
+        select distinct authority
+        from oauth_role_auth
+        where role in
+          (select role
+          from oauth_user_role
+          where username = #{username,jdbcType=VARCHAR})
+    </select>
+
+    <insert id="insert" parameterType="com.backward.account.dmo.RoleAuthDmo">
+        insert into oauth_role_auth (id, role, authority)
+        values (#{id,jdbcType=BIGINT}, #{role,jdbcType=VARCHAR}, #{authority,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteByRole" parameterType="java.lang.String">
+        delete from oauth_role_auth
+        where role = #{role,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByAuth" parameterType="java.lang.String">
+        delete from oauth_role_auth
+        where authority = #{authority,jdbcType=VARCHAR}
+    </delete>
+</mapper>

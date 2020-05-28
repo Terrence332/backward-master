@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backward.account.dao.UserRoleDao">
+    <resultMap id="BaseResultMap" type="com.backward.account.dmo.UserRoleDmo">
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="user" jdbcType="VARCHAR" property="user" />
+        <result column="role" jdbcType="VARCHAR" property="role" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, username, role
+    </sql>
+
+    <select id="selectAllRecord" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from oauth_user_role
+    </select>
+
+    <select id="selectRoleByUsername" parameterType="java.lang.String" resultType="java.lang.String">
+        select role
+        from oauth_user_role
+        where username = #{username,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.backward.account.dmo.UserRoleDmo">
+        insert into oauth_user_role (id, username, role)
+        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
+    </insert>
+
+    <delete id="deleteByUsername" parameterType="java.lang.String">
+        delete from oauth_user_role
+        where username = #{username,jdbcType=VARCHAR}
+    </delete>
+
+    <delete id="deleteByRole" parameterType="java.lang.String">
+        delete from oauth_user_role
+        where role = #{role,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

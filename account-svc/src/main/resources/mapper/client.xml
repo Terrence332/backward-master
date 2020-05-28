@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.backward.account.dao.ClientDao">
+    <resultMap id="BaseResultMap" type="com.backward.account.dmo.ClientDmo">
+        <id column="client_id" jdbcType="VARCHAR" property="clientId" />
+        <result column="resource_ids" jdbcType="VARCHAR" property="resourceIds" />
+        <result column="client_secret" jdbcType="VARCHAR" property="clientSecret" />
+        <result column="scope" jdbcType="VARCHAR" property="scope" />
+        <result column="authorized_grant_types" jdbcType="VARCHAR" property="authorizedGrantTypes" />
+        <result column="web_server_redirect_uri" jdbcType="VARCHAR" property="webServerRedirectUri" />
+        <result column="authorities" jdbcType="VARCHAR" property="authorities" />
+        <result column="access_token_validity" jdbcType="INTEGER" property="accessTokenValidity" />
+        <result column="refresh_token_validity" jdbcType="INTEGER" property="refreshTokenValidity" />
+        <result column="autoapprove" jdbcType="VARCHAR" property="autoapprove" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+      client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri,
+      authorities, access_token_validity, refresh_token_validity, autoapprove
+    </sql>
+
+    <select id="selectByClientId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from oauth_client_details
+        where client_id = #{clientId,jdbcType=VARCHAR}
+    </select>
+
+    <insert id="insert" parameterType="com.backward.account.dmo.ClientDmo">
+        insert into oauth_client_details (client_id, resource_ids, client_secret,
+        scope, authorized_grant_types, web_server_redirect_uri,
+        authorities, access_token_validity, refresh_token_validity,
+        autoapprove, additional_information)
+        values (#{clientId,jdbcType=VARCHAR}, #{resourceIds,jdbcType=VARCHAR}, #{clientSecret,jdbcType=VARCHAR},
+        #{scope,jdbcType=VARCHAR}, #{authorizedGrantTypes,jdbcType=VARCHAR}, #{webServerRedirectUri,jdbcType=VARCHAR},
+        #{authorities,jdbcType=VARCHAR}, #{accessTokenValidity,jdbcType=INTEGER}, #{refreshTokenValidity,jdbcType=INTEGER},
+        #{autoapprove,jdbcType=VARCHAR}, #{additionalInformation,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <delete id="deleteByClientId" parameterType="java.lang.String">
+        delete from oauth_client_details
+        where client_id = #{clientId,jdbcType=VARCHAR}
+    </delete>
+
+    <update id="alterSecretByClientId">
+        update oauth_client_details set client_secret = #{clientSecret,jdbcType=VARCHAR}
+        where client_id = #{clientId,jdbcType=VARCHAR}
+    </update>
+</mapper>
+
+

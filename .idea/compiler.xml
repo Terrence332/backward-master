@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="account-api" />
+        <module name="account-svc" />
+        <module name="auth-server" />
+        <module name="common-lib" />
+        <module name="register-center" />
+        <module name="sample-resource" />
+        <module name="zuul-gateway" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="sample-api" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="account-api" options="-parameters -parameters" />
+      <module name="account-svc" options="-parameters -parameters" />
+      <module name="auth-server" options="-parameters -parameters" />
+      <module name="backward-master" options="" />
+      <module name="common-lib" options="-parameters -parameters" />
+      <module name="register-center" options="-parameters -parameters" />
+      <module name="sample-api" options="-parameters" />
+      <module name="sample-resource" options="-parameters -parameters" />
+      <module name="zuul-gateway" options="-parameters -parameters" />
+    </option>
+  </component>
+</project>
